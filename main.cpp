@@ -2,6 +2,8 @@
 // For compilers that support precompilation, includes "wx/wx.h".
 #ifndef WX_PRECOMP
 #include <wx/wx.h>
+
+#include "frame.h"
 #endif
 class MyApp : public wxApp
 {
@@ -34,7 +36,7 @@ bool MyApp::OnInit()
     this->SetTopWindow(frame);
     frame->Show(true);
 
-    wxProgressDialog* dialog = new wxProgressDialog(wxT("Wait..."), wxT("Keep waiting..."), max, frame, wxPD_AUTO_HIDE | wxPD_APP_MODAL);
+
 }
 
 MyFrame::MyFrame()
@@ -70,26 +72,4 @@ void MyFrame::OnHello(wxCommandEvent& event)
 {
     wxLogMessage("Hello world from wxWidgets!");
 }
-bool myApp :: OnInit(){
-    int i, max = 433;
 
-    wxFrame* frame = new wxFrame(NULL, wxID_ANY, wxT("blah blah"));
-    this->SetTopWindow(frame);
-    frame->Show(true);
-
-    wxProgressDialog* dialog = new wxProgressDialog(wxT("Wait..."), wxT("Keep waiting..."), max, frame, wxPD_AUTO_HIDE | wxPD_APP_MODAL);
-
-    for(int i = 0; i < max; i++){
-        wxMilliSleep(5); //here are computations
-        if(i%23) dialog->Update(i);
-    }
-    dialog->Update(max);
-    delete dialog;
-
-    return true;
-}
-
-int myApp :: OnExit(){
-
-    return 0;
-}
