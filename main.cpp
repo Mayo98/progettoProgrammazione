@@ -1,44 +1,52 @@
-// wxWidgets "Hello World" Program
-// For compilers that support precompilation, includes "wx/wx.h".
+
 #ifndef WX_PRECOMP
 #include <wx/wx.h>
 
-#include "frame.h"
+#include "Frame.h"
+#include "MainFrame.h"
 #endif
 class MyApp : public wxApp
 {
 public:
-    virtual bool OnInit();
+    virtual bool OnInit() override;
+    //virtual bool OnExit(void) override;
 };
 
 class MyFrame : public wxFrame
 {
 public:
-    MyFrame();
-private:
+
     void OnHello(wxCommandEvent& event);
     void OnExit(wxCommandEvent& event);
     void OnAbout(wxCommandEvent& event);
 };
 enum
 {
-    ID_Hello = 1
+    ID_HELLO = 1
 };
+wxBEGIN_EVENT_TABLE(MainFrame, wxFrame)
+                EVT_MENU(ID_HELLO,   MainFrame::OnHello)
+                EVT_MENU(wxID_EXIT,  MainFrame::OnExit)
+                EVT_MENU(wxID_ABOUT, MainFrame::OnAbout)
+wxEND_EVENT_TABLE()
 wxIMPLEMENT_APP(MyApp);
+
+
 bool MyApp::OnInit()
 {
-    MyFrame *frame = new MyFrame();
-    frame->Show(true);
+    MainFrame* mainframe = new MainFrame("Menu", wxPoint(110, 110), wxSize(500,400));
+    mainframe->Show(true);
     return true;
+    /*
     int i, max = 433;
 
     wxFrame* frame1 = new wxFrame(NULL, wxID_ANY, wxT("blah blah"));
     this->SetTopWindow(frame);
     frame->Show(true);
-
+*/
 
 }
-
+/*
 MyFrame::MyFrame()
         : wxFrame(NULL, wxID_ANY, "Carica File")
 {
@@ -72,4 +80,5 @@ void MyFrame::OnHello(wxCommandEvent& event)
 {
     wxLogMessage("Hello world from wxWidgets!");
 }
+ */
 

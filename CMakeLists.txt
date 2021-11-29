@@ -3,7 +3,7 @@ project(progetto)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(progetto main.cpp frame.cpp frame.h)
+add_executable(progetto main.cpp Frame.cpp Frame.h MainFrame.cpp MainFrame.h)
 
 find_package(wxWidgets COMPONENTS ${WX_COMPONENTS} REQUIRED)
 

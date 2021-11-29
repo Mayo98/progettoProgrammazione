@@ -9,11 +9,11 @@
 #include <wx/gauge.h>
 #include <wx/stattext.h>
 
-class frame : public wxDialog{
+class Frame : public wxDialog{
 
 protected:
-
-    frame(wxWindow *parent, wxWindowID id, const wxString &titolo, const wxPoint &pos, const wxSize &size, int style);
+    bool isActive;
+    Frame(wxWindow *parent, wxWindowID id, const wxString &titolo, const wxPoint &pos, const wxSize &size, int style);
 
     wxGauge* gauge;
     wxStaticText* staticText;
@@ -24,13 +24,14 @@ public:
     wxGauge *GetGauge(){return gauge;}
     wxStaticText* GetStaticText(){return staticText;}
     wxBoxSizer* getBoxSizer() const;
-
+    bool getIsActive();
     //constr
-    frame(wxWindow * parent, wxWindowID id, const wxString& titolo ,
-          const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(500,300),
-          long style = wxDEFAULT_DIALOG_STYLE);
 
-    virtual ~frame();
+    Frame(wxWindow * parent, wxWindowID id, const wxString& titolo ,
+    const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(500,300),
+    long style = wxDEFAULT_DIALOG_STYLE);
+    void OnExit(wxCommandEvent& event);
+    virtual ~Frame();
 };
 
 #endif //PROGETTO_FRAME_H
