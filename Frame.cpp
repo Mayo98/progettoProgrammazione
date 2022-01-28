@@ -12,14 +12,6 @@ Frame::Frame(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoi
         : wxDialog(parent, id, title, pos, size, style){
     boxSizer = new wxBoxSizer(wxVERTICAL_HATCH);
     this->SetSizer(boxSizer);
-
-    gauge = new wxGauge(this, wxID_ANY, 100, wxDefaultPosition, wxDLG_UNIT(this, wxSize(-1,-1)), wxGA_TEXT);
-    gauge->SetValue(0);
-
-    boxSizer->Add(gauge, 3, wxALL|wxEXPAND, 15);
-    staticText = new wxStaticText(this, wxID_ANY, _("0 %"), wxDefaultPosition, wxDLG_UNIT(this, wxSize(-1,-1)), 0);
-    boxSizer->Add(staticText, 1, wxALL|wxALIGN_CENTER_VERTICAL);
-
     isActive = true;
 }
 
@@ -36,3 +28,38 @@ bool Frame::getIsActive() {
 wxBoxSizer *Frame::getBoxSizer() const {
     return boxSizer;
 }
+
+wxArrayString Frame::CreateFolderList() {
+
+    wxArrayString *elem;
+    wxFileDialog* dialog = new wxFileDialog(this);
+
+    if (dialog->ShowModal() == wxID_OK)
+    {
+        /*
+        dialog->GetFilenames(*elem);
+        wxLogMessage(dialog->GetSize())
+        int count = elem->Count();
+         */
+
+        dialog->GetFilenames(*elem);
+        int count = elem->Count();
+
+        wxMessageBox((char)count);
+
+
+        /*
+         for(size_t i=0; i < dialog->GetSize(); ++i)
+         {
+         wxString str = elem->Item(i);
+         cout<<"str["<<i<<"] = "<<str.c_str().AsChar()<<endl;
+         }
+         */
+
+    }
+    dialog->Destroy();
+return *elem;
+}
+
+
+

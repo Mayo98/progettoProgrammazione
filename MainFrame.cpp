@@ -1,13 +1,15 @@
 //
 // Created by Giacomo Magistrato on 24/11/21.
 //
-
+#include "wx/init.h"
 #include "MainFrame.h"
 #include "Frame.h"
 #include <wx/wx.h>
 #include <wx/sizer.h>
-#include <wx/sizer.h>
 #include <wx/window.h>
+#include <wx/dir.h>
+#include <iostream>
+#include "LoadingHandler.h"
 
 enum {
     ID_HELLO = 1
@@ -23,20 +25,38 @@ MainFrame::MainFrame(const wxString& title, const wxPoint& pos, const wxSize& si
     gridSizerSlow->SetFlexibleDirection( wxBOTH );
     gridSizerSlow->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 
+    //Button Cerca
+    button1 = new wxButton(this, wxID_ANY, _("Cerca File"), wxPoint(50,50), wxDLG_UNIT(this, wxSize(-1,-1)), 0);
+    button1->Bind(wxEVT_BUTTON, &MainFrame::ButtonSearchClicked, this);
     boxSizer->Add(gridSizerSlow);
+    boxSizer = new wxBoxSizer(wxVERTICAL_HATCH);
+    this->SetSizer(boxSizer);
+
+    //Barra caricamento
+    gauge = new wxGauge(this, wxID_ANY, 100, wxDefaultPosition , wxDLG_UNIT(this, wxSize(-1,-1)), wxGA_TEXT);
+    gauge->SetValue(0);
+    boxSizer->Add(gauge, 3, wxALL|wxEXPAND, 15);
+    staticText = new wxStaticText(this, wxID_ANY, _("0 %"), wxDefaultPosition, wxDLG_UNIT(this, wxSize(-1,-1)), 0);
+    boxSizer->Add(staticText, 1, wxALL|wxALIGN_CENTER_VERTICAL);
+
+
+
 }
 void MainFrame::OnExit(wxCommandEvent& event) {
     Close( true );
 }
 
 void MainFrame::OnAbout(wxCommandEvent& event) {
-    wxMessageBox( "Choose your download",
+    wxMessageBox( "Choose your upload",
                   "About Loading Bar", wxOK | wxICON_INFORMATION );
 }
 
 void MainFrame::OnHello(wxCommandEvent& event) {
     wxLogMessage("Loading bar");
 }
+void MainFrame::ButtonSearchClicked(wxCommandEvent &event) {
+    Frame *frame = new Frame(this);
+    frame->CreateFolderList();
 
 
-
+}
