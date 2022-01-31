@@ -39,8 +39,6 @@ MainFrame::MainFrame(const wxString& title, const wxPoint& pos, const wxSize& si
     staticText = new wxStaticText(this, wxID_ANY, _("0 %"), wxDefaultPosition, wxDLG_UNIT(this, wxSize(-1,-1)), 0);
     boxSizer->Add(staticText, 1, wxALL|wxALIGN_CENTER_VERTICAL);
 
-
-
 }
 void MainFrame::OnExit(wxCommandEvent& event) {
     Close( true );
@@ -54,9 +52,51 @@ void MainFrame::OnAbout(wxCommandEvent& event) {
 void MainFrame::OnHello(wxCommandEvent& event) {
     wxLogMessage("Loading bar");
 }
+
 void MainFrame::ButtonSearchClicked(wxCommandEvent &event) {
     Frame *frame = new Frame(this);
-    frame->CreateFolderList();
+    wxArrayString elem = frame->CreateFolderList();
+    int speed = elem.Count();
+    LoadingHandler *loadingHandler = new LoadingHandler();
+    loadingHandler->addO(this);
+    loadingHandler->upload(0, speed);
 
 
+}
+MainFrame::~MainFrame() {
+    loadingHandler->remove(this);
+}
+LoadingHandler *MainFrame::getLoadingHandler() const{
+    return MainFrame::loadingHandler;
+}
+void MainFrame::setLoadingHandler(LoadingHandler *loadingHandler) {
+    MainFrame::loadingHandler = loadingHandler;
+}
+bool MainFrame::getIsActive() {
+    return MainFrame::isActive;
+}
+bool MainFrame::update() {
+    if (loadingHandler != nullptr) {
+        int state = loadingHandler->getState();
+
+        if (state < 0) {
+            state = 0;
+        }
+
+        if (state > 100) {
+            state = 100;
+        }
+
+        gauge->SetValue(state);
+
+        std::string s = std::to_string(state);
+        staticText->SetLabel(s + " %");
+
+        if (state == gauge->GetRange()){
+            button1->SetLabel("Finish");
+        }
+
+        wxYield();
+        return isActive;
+    }
 }

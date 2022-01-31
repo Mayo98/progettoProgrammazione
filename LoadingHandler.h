@@ -10,6 +10,8 @@
 class LoadingHandler : public AbstractSubject {
 
 public:
+
+    int state, speed;
     //constr and distr
 
     LoadingHandler() { this->state = 0; }
@@ -35,10 +37,6 @@ public:
         this->state = state;
         return notify();
     }
-
-public:
-
-    int state, speed;
 
 };
 

@@ -41,12 +41,8 @@ wxArrayString Frame::CreateFolderList() {
         wxLogMessage(dialog->GetSize())
         int count = elem->Count();
          */
-
         dialog->GetFilenames(*elem);
         int count = elem->Count();
-
-        wxMessageBox((char)count);
-
 
         /*
          for(size_t i=0; i < dialog->GetSize(); ++i)
@@ -55,7 +51,6 @@ wxArrayString Frame::CreateFolderList() {
          cout<<"str["<<i<<"] = "<<str.c_str().AsChar()<<endl;
          }
          */
-
     }
     dialog->Destroy();
 return *elem;

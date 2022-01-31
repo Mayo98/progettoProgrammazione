@@ -10,9 +10,11 @@
 
 class AbstractSubject {
 protected:
+    //definizione lista observer
     std::list<Observer*> observers;
 public:
     virtual ~AbstractSubject() {}
+
     void addO(Observer*o){observers.push_back(o);}
     virtual void remove(Observer *o) { observers.remove(o); }
     bool notify();
