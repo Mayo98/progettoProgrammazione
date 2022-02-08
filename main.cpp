@@ -9,16 +9,7 @@ class MyApp : public wxApp
 {
 public:
     virtual bool OnInit() override;
-    //virtual bool OnExit(void) override;
-};
-
-class MyFrame : public wxFrame
-{
-public:
-
-    void OnHello(wxCommandEvent& event);
-    void OnExit(wxCommandEvent& event);
-    void OnAbout(wxCommandEvent& event);
+    virtual int OnExit(void) override;
 };
 enum
 {
@@ -31,20 +22,15 @@ wxBEGIN_EVENT_TABLE(MainFrame, wxFrame)
 wxEND_EVENT_TABLE()
 wxIMPLEMENT_APP(MyApp);
 
-
 bool MyApp::OnInit()
 {
     MainFrame* mainframe = new MainFrame("Menu", wxPoint(110, 110), wxSize(500,400));
     mainframe->Show(true);
     return true;
-    /*
-    int i, max = 433;
-
-    wxFrame* frame1 = new wxFrame(NULL, wxID_ANY, wxT("blah blah"));
-    this->SetTopWindow(frame);
-    frame->Show(true);
-*/
-
+}
+int MyApp::OnExit(void) {
+    close(true);
+    return 0;
 }
 /*
 MyFrame::MyFrame()

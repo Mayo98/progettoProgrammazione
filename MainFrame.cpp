@@ -29,7 +29,7 @@ MainFrame::MainFrame(const wxString& title, const wxPoint& pos, const wxSize& si
     button1 = new wxButton(this, wxID_ANY, _("Cerca File"), wxPoint(50,50), wxDLG_UNIT(this, wxSize(-1,-1)), 0);
     button1->Bind(wxEVT_BUTTON, &MainFrame::ButtonSearchClicked, this);
     boxSizer->Add(gridSizerSlow);
-    boxSizer = new wxBoxSizer(wxVERTICAL_HATCH);
+    boxSizer = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(boxSizer);
 
     //Barra caricamento
@@ -37,10 +37,11 @@ MainFrame::MainFrame(const wxString& title, const wxPoint& pos, const wxSize& si
     gauge->SetValue(0);
     boxSizer->Add(gauge, 3, wxALL|wxEXPAND, 15);
     staticText = new wxStaticText(this, wxID_ANY, _("0 %"), wxDefaultPosition, wxDLG_UNIT(this, wxSize(-1,-1)), 0);
-    boxSizer->Add(staticText, 1, wxALL|wxALIGN_CENTER_VERTICAL);
+    boxSizer->Add(staticText, 1, wxALL|wxALIGN_CENTER);
 
 }
 void MainFrame::OnExit(wxCommandEvent& event) {
+    //loadingHandler->remove(this);
     Close( true );
 }
 
@@ -56,47 +57,60 @@ void MainFrame::OnHello(wxCommandEvent& event) {
 void MainFrame::ButtonSearchClicked(wxCommandEvent &event) {
     Frame *frame = new Frame(this);
     wxArrayString elem = frame->CreateFolderList();
-    int speed = elem.Count();
-    LoadingHandler *loadingHandler = new LoadingHandler();
-    loadingHandler->addO(this);
-    loadingHandler->upload(0, speed);
-
+    int speed = elem.Count() * 10;
+    LoadingHandler*loadingHandler1 = new LoadingHandler();
+    loadingHandler1->addO(this);
+    this->setLoadingHandler(loadingHandler1);
+    loadingHandler->upload(0,elem, speed);
 
 }
+
 MainFrame::~MainFrame() {
     loadingHandler->remove(this);
 }
 LoadingHandler *MainFrame::getLoadingHandler() const{
     return MainFrame::loadingHandler;
 }
-void MainFrame::setLoadingHandler(LoadingHandler *loadingHandler) {
-    MainFrame::loadingHandler = loadingHandler;
+void MainFrame::setLoadingHandler(LoadingHandler *loadingHandler1) {
+    MainFrame::loadingHandler = loadingHandler1;
 }
 bool MainFrame::getIsActive() {
     return MainFrame::isActive;
 }
 bool MainFrame::update() {
-    if (loadingHandler != nullptr) {
-        int state = loadingHandler->getState();
 
+    if (loadingHandler != nullptr) {
+
+        int state = loadingHandler->getState();
         if (state < 0) {
             state = 0;
         }
-
+        //wxMessageBox("ci sono");
+        //wxString msg = wxString::Format(wxT("my value is %d"), state);
+        //wxMessageBox(msg, wxT("a message"), wxOK | wxCENTRE , this);
         if (state > 100) {
             state = 100;
         }
 
         gauge->SetValue(state);
 
+        //this->Refresh();
+        //this->Update();
+
         std::string s = std::to_string(state);
         staticText->SetLabel(s + " %");
 
         if (state == gauge->GetRange()){
+
             button1->SetLabel("Finish");
         }
-
         wxYield();
+
         return isActive;
     }
+    else
+        return false;
 }
+
+
+

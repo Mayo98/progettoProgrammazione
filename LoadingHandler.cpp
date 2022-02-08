@@ -3,25 +3,28 @@
 //
 
 #include "LoadingHandler.h"
+#include <wx/wx.h>
 
-void LoadingHandler::upload(int initial, int speed) {
+void LoadingHandler::upload(int initial, wxArrayString elem, int speedMs) {
+    int N = elem.size();
 
-    if(initial >= 0 and initial <= 100 and speed >= 0)
-    {
+    if (initial <= 100 and initial >= 0 and speedMs > 0) {
         setState(initial);
-        setSpeed(speed);
-
-        for(int i = 0; i < (100-initial); i++)
-        {
-            if(!observers.empty())
-            {
-                if(!setState(state+1))
-                {
+        setSpeed(speedMs);
+        while (N > 0) {
+            for (int i = 0; i < 100 / N - initial; i++) {
+                if (!observers.empty()) {
+                    state += 1;
+                    setState(state);
+                    wxMilliSleep(speedMs );
+                } else {
                     break;
                 }
-                else break;
             }
+            N -= 1;
+            wxMilliSleep(1000);
         }
+
     }
 
 }

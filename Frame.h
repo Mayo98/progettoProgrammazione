@@ -9,6 +9,7 @@
 #include <wx/gauge.h>
 #include <wx/stattext.h>
 #include "Observer.h"
+#include <wx/msgdlg.h>
 class Frame : public wxDialog {
 
 protected:
@@ -31,9 +32,10 @@ public:
 
 
     void OnExit(wxCommandEvent& event);
+    void OnHello(wxCommandEvent &event);
     wxArrayString CreateFolderList();
     virtual ~Frame();
-    //bool update() override;
+
 
 
 };

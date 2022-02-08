@@ -6,39 +6,47 @@
 #define PROGETTO_LOADINGHANDLER_H
 
 #include "AbstractSubject.h"
+#include <wx/wx.h>
+#include <wx/utils.h>
 
 class LoadingHandler : public AbstractSubject {
 
 public:
-
     int state, speed;
     //constr and distr
 
     LoadingHandler() { this->state = 0; }
-    virtual ~LoadingHandler() { }
 
-    virtual void upload(int initial, int speed);
+    virtual ~LoadingHandler() {};
+
+    virtual void upload(int initial,wxArrayString elem, int speedMs);
 
     //get e set delle var
     int getState() const {
-        return state;
+        return LoadingHandler::state;
     }
 
     int getSpeed() const {
         return speed;
     }
 
-    void setSpeed(int speed) {
-        LoadingHandler::speed = speed;
+    void setSpeed(int speedMs) {
+        LoadingHandler::speed = speedMs;
     }
 
     //chiamo notify per avvertire obs del cambio stato
-    bool setState(int state) {
-        this->state = state;
+    bool setState(int stat) {
+        this->state = stat;
         return notify();
+    }
+    bool getObs(){
+        if(observers.empty())
+            return false;
+        else
+            return true;
+
     }
 
 };
-
 
 #endif //PROGETTO_LOADINGHANDLER_H

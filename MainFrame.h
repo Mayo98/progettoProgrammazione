@@ -15,7 +15,8 @@ class MainFrame : public wxFrame, public Observer{
 protected:
     wxGauge* gauge;
     wxStaticText* staticText;
-    bool isActive;
+    LoadingHandler* loadingHandler;
+    bool isActive = true;
 
 public:
         MainFrame(const wxString& title, const wxPoint& pos, const wxSize& size, long style = wxDEFAULT_FRAME_STYLE);
@@ -23,7 +24,7 @@ public:
         void OnExit(wxCommandEvent& event);
         void OnAbout(wxCommandEvent& event);
 
-        LoadingHandler* loadingHandler;
+
         wxButton* button1;
         wxGauge *GetGauge(){return gauge;}
         wxStaticText* GetStaticText(){return staticText;}

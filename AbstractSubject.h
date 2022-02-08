@@ -7,7 +7,7 @@
 
 #include <list>
 #include "Observer.h"
-
+#include <wx/wx.h>
 class AbstractSubject {
 protected:
     //definizione lista observer
@@ -15,7 +15,11 @@ protected:
 public:
     virtual ~AbstractSubject() {}
 
-    void addO(Observer*o){observers.push_back(o);}
+    void addO(Observer*o){
+        observers.push_back(o);
+        if(observers.empty())
+            wxMessageBox("Aggiunto");
+    }
     virtual void remove(Observer *o) { observers.remove(o); }
     bool notify();
 

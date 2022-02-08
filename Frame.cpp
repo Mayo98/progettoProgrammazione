@@ -6,11 +6,12 @@
 #include <wx/wx.h>
 #include <wx/wxprec.h>
 #include <iostream>
-
+#include <wx/msgdlg.h>
+#include <wx/filename.h>
 
 Frame::Frame(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
         : wxDialog(parent, id, title, pos, size, style){
-    boxSizer = new wxBoxSizer(wxVERTICAL_HATCH);
+    boxSizer = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(boxSizer);
     isActive = true;
 }
@@ -20,6 +21,9 @@ Frame::~Frame() {
 }
 void Frame::OnExit(wxCommandEvent &event) {
     Close(true);
+}
+void Frame::OnHello(wxCommandEvent &event) {
+    Frame::CreateFolderList();
 }
 bool Frame::getIsActive() {
     return isActive;
@@ -31,29 +35,17 @@ wxBoxSizer *Frame::getBoxSizer() const {
 
 wxArrayString Frame::CreateFolderList() {
 
-    wxArrayString *elem;
-    wxFileDialog* dialog = new wxFileDialog(this);
+    wxArrayString elem;
+    wxFileDialog* dialog =
+            new wxFileDialog( this, _("Open file"), "", "","" ,
+                              wxFD_MULTIPLE, wxDefaultPosition);
 
     if (dialog->ShowModal() == wxID_OK)
     {
-        /*
-        dialog->GetFilenames(*elem);
-        wxLogMessage(dialog->GetSize())
-        int count = elem->Count();
-         */
-        dialog->GetFilenames(*elem);
-        int count = elem->Count();
-
-        /*
-         for(size_t i=0; i < dialog->GetSize(); ++i)
-         {
-         wxString str = elem->Item(i);
-         cout<<"str["<<i<<"] = "<<str.c_str().AsChar()<<endl;
-         }
-         */
+        dialog->GetFilenames(elem);
     }
     dialog->Destroy();
-return *elem;
+return elem;
 }
 
 
