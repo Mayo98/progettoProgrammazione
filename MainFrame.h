@@ -16,7 +16,9 @@ protected:
     wxGauge* gauge;
     wxStaticText* staticText;
     LoadingHandler* loadingHandler;
+    wxListBox* listBox;
     bool isActive = true;
+    bool added = false;
 
 public:
         MainFrame(const wxString& title, const wxPoint& pos, const wxSize& size, long style = wxDEFAULT_FRAME_STYLE);
@@ -26,6 +28,7 @@ public:
 
 
         wxButton* button1;
+        wxButton* button2;
         wxGauge *GetGauge(){return gauge;}
         wxStaticText* GetStaticText(){return staticText;}
         wxDECLARE_EVENT_TABLE();
@@ -33,7 +36,7 @@ public:
         bool getIsActive();
         LoadingHandler *getLoadingHandler() const;
         void setLoadingHandler(LoadingHandler *loadingHandler);
-
+        bool getIsAdded(){return this->added;}
         bool update() override;
         virtual ~MainFrame();
 };

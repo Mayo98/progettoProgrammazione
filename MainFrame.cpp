@@ -19,29 +19,42 @@ MainFrame::MainFrame(const wxString& title, const wxPoint& pos, const wxSize& si
             : wxFrame(NULL, wxID_ANY, title, pos, size, style) {
     wxBoxSizer *boxSizer = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(boxSizer);
-    boxSizer->Add(0, 0, 1, wxALL, 5);
+    boxSizer->Add(0, 0, 1, wxALL, 15);
 
-    wxFlexGridSizer* gridSizerSlow = new wxFlexGridSizer(0, 2, 0, 15);
-    gridSizerSlow->SetFlexibleDirection( wxBOTH );
-    gridSizerSlow->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+    wxFlexGridSizer* gridSizerOpen = new wxFlexGridSizer(0, 2, 0, 15);
+    gridSizerOpen->SetFlexibleDirection( wxBOTH );
+    gridSizerOpen->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 
     //Button Cerca
-    button1 = new wxButton(this, wxID_ANY, _("Cerca File"), wxPoint(50,50), wxDLG_UNIT(this, wxSize(-1,-1)), 0);
+
+    boxSizer->Add(gridSizerOpen);
+
+    button1 = new wxButton(this, wxID_ANY, _("Open"), wxDefaultPosition, wxDLG_UNIT(this, wxSize(-1,-1)), 0);
+    gridSizerOpen->Add(button1, 4, wxALIGN_LEFT);
     button1->Bind(wxEVT_BUTTON, &MainFrame::ButtonSearchClicked, this);
-    boxSizer->Add(gridSizerSlow);
-    boxSizer = new wxBoxSizer(wxVERTICAL);
-    this->SetSizer(boxSizer);
+
+    wxStaticText* textSlow = new wxStaticText(this, wxID_ANY, _("Premi sul bottone per scegliere i file da caricare."), wxDefaultPosition, wxDLG_UNIT(this, wxSize(-1,-1)), 0);
+    gridSizerOpen->Add(textSlow, 3, wxALIGN_RIGHT|wxEXPAND, 4);
+
+
+    boxSizer->Add(0, 0, 1, wxALL, 5);
+
+
 
     //Barra caricamento
     gauge = new wxGauge(this, wxID_ANY, 100, wxDefaultPosition , wxDLG_UNIT(this, wxSize(-1,-1)), wxGA_TEXT);
     gauge->SetValue(0);
-    boxSizer->Add(gauge, 3, wxALL|wxEXPAND, 15);
+    boxSizer->Add(gauge, 1, wxALL|wxEXPAND, 15);
     staticText = new wxStaticText(this, wxID_ANY, _("0 %"), wxDefaultPosition, wxDLG_UNIT(this, wxSize(-1,-1)), 0);
-    boxSizer->Add(staticText, 1, wxALL|wxALIGN_CENTER);
+    boxSizer->Add(staticText, 3, wxALL|wxALIGN_CENTER);
+
+    //listbox
+    wxArrayString strings;
+    listBox = new wxListBox(this, wxID_ANY, wxDefaultPosition, wxSize(180, 80), strings, wxLB_SINGLE);
+    boxSizer->Add(listBox, 2, wxALL|wxALIGN_CENTER);
 
 }
 void MainFrame::OnExit(wxCommandEvent& event) {
-    //loadingHandler->remove(this);
     Close( true );
 }
 
@@ -57,7 +70,9 @@ void MainFrame::OnHello(wxCommandEvent& event) {
 void MainFrame::ButtonSearchClicked(wxCommandEvent &event) {
     Frame *frame = new Frame(this);
     wxArrayString elem = frame->CreateFolderList();
+
     int speed = elem.Count() * 10;
+    this->listBox->Append(elem);
     LoadingHandler*loadingHandler1 = new LoadingHandler();
     loadingHandler1->addO(this);
     this->setLoadingHandler(loadingHandler1);
@@ -66,12 +81,16 @@ void MainFrame::ButtonSearchClicked(wxCommandEvent &event) {
 }
 
 MainFrame::~MainFrame() {
-    loadingHandler->remove(this);
+    if(getIsAdded())
+        loadingHandler->remove(this);
+
 }
+
 LoadingHandler *MainFrame::getLoadingHandler() const{
     return MainFrame::loadingHandler;
 }
 void MainFrame::setLoadingHandler(LoadingHandler *loadingHandler1) {
+    this->added = true;
     MainFrame::loadingHandler = loadingHandler1;
 }
 bool MainFrame::getIsActive() {
@@ -84,7 +103,11 @@ bool MainFrame::update() {
         int state = loadingHandler->getState();
         if (state < 0) {
             state = 0;
-        }
+        }/*
+        if(state == 0)
+        {
+            button1->SetLabel("Open");
+        }*/
         //wxMessageBox("ci sono");
         //wxString msg = wxString::Format(wxT("my value is %d"), state);
         //wxMessageBox(msg, wxT("a message"), wxOK | wxCENTRE , this);
@@ -93,10 +116,6 @@ bool MainFrame::update() {
         }
 
         gauge->SetValue(state);
-
-        //this->Refresh();
-        //this->Update();
-
         std::string s = std::to_string(state);
         staticText->SetLabel(s + " %");
 
