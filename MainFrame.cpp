@@ -39,7 +39,26 @@ MainFrame::MainFrame(const wxString& title, const wxPoint& pos, const wxSize& si
 
     boxSizer->Add(0, 0, 1, wxALL, 5);
 
+    /*
+    wxFlexGridSizer* gridSizerNormal = new wxFlexGridSizer(0, 2, 35, 15);
+    gridSizerNormal->SetFlexibleDirection( wxBOTH );
+    gridSizerNormal->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 
+    boxSizer->Add(gridSizerNormal);
+
+    wxButton* buttonNormal = new wxButton(this, wxID_ANY, _("Download"), wxDefaultPosition, wxDLG_UNIT(this, wxSize(-1,-1)), 0);
+    gridSizerNormal->Add(buttonNormal, 1, wxALIGN_CENTER, 4);
+    buttonNormal->Bind(wxEVT_BUTTON, &MainFrame::B, this); */
+    /*
+    button1 = new wxButton(this, wxID_ANY, _("Cerca File"), wxPoint(15,50), wxDLG_UNIT(this, wxSize(-1,-1)), 0);
+    button1->Bind(wxEVT_BUTTON, &MainFrame::ButtonSearchClicked, this);
+    boxSizer->Add(gridSizerSlow);
+    boxSizer = new wxBoxSizer(wxVERTICAL);
+    this->SetSizer(boxSizer);
+    boxSizer->Add(button1, 2, wxALIGN_LEFT);
+    button2 = new wxButton(this, wxID_ANY, _("Pause"), wxPoint(50, 50), wxDLG_UNIT(this, wxSize(-1,-1)),0);
+    boxSizer->Add(button2, 1, wxHORIZONTAL);
+*/
 
     //Barra caricamento
     gauge = new wxGauge(this, wxID_ANY, 100, wxDefaultPosition , wxDLG_UNIT(this, wxSize(-1,-1)), wxGA_TEXT);
