@@ -14,7 +14,6 @@ class Frame : public wxDialog {
 
 protected:
 
-
     bool isActive;
     wxStaticText* staticText;
     wxBoxSizer* boxSizer;

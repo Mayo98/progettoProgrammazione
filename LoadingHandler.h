@@ -13,7 +13,6 @@ class LoadingHandler : public AbstractSubject {
 //privati
 private:
     int state, speed;
-
 public:
 
     //constr and distr

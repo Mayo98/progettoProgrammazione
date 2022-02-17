@@ -3,6 +3,7 @@
 //
 
 #include "AbstractSubject.h"
+#include "AbstractSubject.h"
 
 
 bool AbstractSubject::notify() {
