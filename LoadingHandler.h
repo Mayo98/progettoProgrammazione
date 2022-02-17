@@ -10,9 +10,12 @@
 #include <wx/utils.h>
 
 class LoadingHandler : public AbstractSubject {
+//privati
+private:
+    int state, speed;
 
 public:
-    int state, speed;
+
     //constr and distr
 
     LoadingHandler() { this->state = 0; }
