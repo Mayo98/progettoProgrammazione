@@ -5,7 +5,7 @@
 #include "AbstractSubject.h"
 #include "AbstractSubject.h"
 
-
+/*
 bool AbstractSubject::notify() {
     //scorro lista observers e invoco il loro update
     for (auto itr = std::begin(observers); itr != std::end(observers); itr++)
@@ -19,3 +19,4 @@ bool AbstractSubject::notify() {
     }
     return true;
 }
+ */

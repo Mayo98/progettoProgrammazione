@@ -4,6 +4,7 @@
 
 #include "Frame.h"
 #include "MainFrame.h"
+
 #endif
 class MyApp : public wxApp
 {
@@ -26,6 +27,7 @@ bool MyApp::OnInit()
 {
     MainFrame* mainframe = new MainFrame("Menu", wxPoint(110, 110), wxSize(500,400));
     mainframe->Show(true);
+
     return true;
 }
 int MyApp::OnExit(void) {

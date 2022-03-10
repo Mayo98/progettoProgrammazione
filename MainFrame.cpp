@@ -102,7 +102,6 @@ void MainFrame::ButtonSearchClicked(wxCommandEvent &event) {
 MainFrame::~MainFrame() {
     if(getIsAdded())
         loadingHandler->remove(this);
-
 }
 
 LoadingHandler *MainFrame::getLoadingHandler() const{

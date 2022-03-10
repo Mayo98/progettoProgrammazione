@@ -15,13 +15,9 @@ protected:
 public:
     virtual ~AbstractSubject() {}
 
-    void addO(Observer*o){
-        observers.push_back(o);
-        if(observers.empty())
-            wxMessageBox("Aggiunto");
-    }
-    virtual void remove(Observer *o) { observers.remove(o); }
-    bool notify();
+    virtual void addO(Observer*o) = 0;
+    virtual void remove(Observer *o) = 0;
+    virtual bool notify() = 0;
 
 };
 

@@ -13,30 +13,23 @@
 class Frame : public wxDialog {
 
 protected:
-
     bool isActive;
     wxStaticText* staticText;
     wxBoxSizer* boxSizer;
-
 
 public:
 
     wxBoxSizer* getBoxSizer() const;
     bool getIsActive();
     //constr
-
     Frame(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Cerca..."),
           const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(500,300),
           long style = wxDEFAULT_DIALOG_STYLE);
-
 
     void OnExit(wxCommandEvent& event);
     void OnHello(wxCommandEvent &event);
     wxArrayString CreateFolderList();
     virtual ~Frame();
-
-
-
 };
 
 #endif //PROGETTO_FRAME_H

@@ -13,6 +13,7 @@ class LoadingHandler : public AbstractSubject {
 //privati
 private:
     int state, speed;
+    std::list<Observer*> observers;
 public:
 
     //constr and distr
@@ -35,6 +36,27 @@ public:
     void setSpeed(int speedMs) {
         LoadingHandler::speed = speedMs;
     }
+
+    //Subject
+
+    void addO(Observer*o){
+        observers.push_back(o);
+    }
+    void remove(Observer *o) { observers.remove(o); }
+
+    virtual bool notify() {
+        //scorro lista observers e invoco il loro update
+        for (auto itr = std::begin(observers); itr != std::end(observers); itr++) {
+            if ((*itr)->update())
+                continue;
+            else {
+                remove(*itr);
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     //chiamo notify per avvertire obs del cambio stato
     bool setState(int stat) {

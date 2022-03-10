@@ -25,20 +25,21 @@ public:
         void OnHello(wxCommandEvent& event);
         void OnExit(wxCommandEvent& event);
         void OnAbout(wxCommandEvent& event);
+        void setLoadingHandler(LoadingHandler *loadingHandler);
+        LoadingHandler *getLoadingHandler() const;
+        virtual ~MainFrame() override;
 
+        wxGauge *GetGauge(){return gauge;}
 
         wxButton* button1;
-        wxButton* button2;
-        wxGauge *GetGauge(){return gauge;}
-        wxStaticText* GetStaticText(){return staticText;}
-        wxDECLARE_EVENT_TABLE();
+
+        //wxStaticText* GetStaticText(){return staticText;}
+
         void ButtonSearchClicked(wxCommandEvent &event);
         bool getIsActive();
-        LoadingHandler *getLoadingHandler() const;
-        void setLoadingHandler(LoadingHandler *loadingHandler);
         bool getIsAdded(){return this->added;}
         bool update() override;
-        virtual ~MainFrame();
+wxDECLARE_EVENT_TABLE();
 };
 
 
