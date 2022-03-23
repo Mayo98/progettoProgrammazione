@@ -44,7 +44,7 @@ public:
     }
     void remove(Observer *o) override{ observers.remove(o); }
 
-    virtual void notify() override{
+    void notify() override{
         //scorro lista observers e invoco il loro update
         for (auto itr = std::begin(observers); itr != std::end(observers); itr++) {
             (*itr)->update();
