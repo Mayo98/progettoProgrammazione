@@ -41,7 +41,7 @@ TEST(LoadingHandlerSuite, OverState) {
     TestObserver* testObserver = new TestObserver(loadingHandler, 0);
 
     loadingHandler->addO(testObserver);
-    loadingHandler->setState(101);
+    loadingHandler->setState(121);
 
     ASSERT_EQ(100, testObserver->getState());
 }

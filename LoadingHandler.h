@@ -22,7 +22,7 @@ public:
 
     virtual ~LoadingHandler() {};
 
-    virtual void upload(int initial,wxArrayString elem, int speedMs);
+    void upload(int initial,wxArrayString elem, int speedMs) ;
 
     //get e set delle var
     int getState() const {
@@ -39,29 +39,22 @@ public:
 
     //Subject
 
-    void addO(Observer*o){
+    void addO(Observer*o) override{
         observers.push_back(o);
     }
-    void remove(Observer *o) { observers.remove(o); }
+    void remove(Observer *o) override{ observers.remove(o); }
 
-    virtual bool notify() {
+    virtual void notify() override{
         //scorro lista observers e invoco il loro update
         for (auto itr = std::begin(observers); itr != std::end(observers); itr++) {
-            if ((*itr)->update())
-                continue;
-            else {
-                remove(*itr);
-                return false;
-            }
+            (*itr)->update();
         }
-        return true;
     }
 
-
     //chiamo notify per avvertire obs del cambio stato
-    bool setState(int stat) {
+    void setState(int stat) {
         this->state = stat;
-        return notify();
+        notify();
     }
     bool getObs(){
         if(observers.empty())
@@ -70,7 +63,6 @@ public:
             return true;
 
     }
-
 };
 
 #endif //PROGETTO_LOADINGHANDLER_H

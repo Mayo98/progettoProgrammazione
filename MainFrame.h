@@ -33,8 +33,6 @@ public:
 
         wxButton* button1;
 
-        //wxStaticText* GetStaticText(){return staticText;}
-
         void ButtonSearchClicked(wxCommandEvent &event);
         bool getIsActive();
         bool getIsAdded(){return this->added;}

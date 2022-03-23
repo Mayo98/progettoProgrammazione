@@ -17,7 +17,7 @@ public:
 
     virtual void addO(Observer*o) = 0;
     virtual void remove(Observer *o) = 0;
-    virtual bool notify() = 0;
+    virtual void notify() = 0;
 
 };
 
